@@ -57,12 +57,16 @@ Who: [@TerryHughes](https://twitter.com/TerryHughes), [@NotMyself](https://twitt
 
 What & Why: [Refactor This: The Gilded Rose Kata](http://iamnotmyself.com/2011/02/13/refactor-this-the-gilded-rose-kata/)
 
+Additions: Tests, refactoring, and new feature implemented by Adam Risius
+
 ## License
 
 MIT
 
 ## Suggested attribution
 
-This work is by [@TerryHughes](https://twitter.com/TerryHughes), [@NotMyself](https://twitter.com/NotMyself)
+The Kata work is by [@TerryHughes](https://twitter.com/TerryHughes), [@NotMyself](https://twitter.com/NotMyself)
 
-The repository can be found at [https://github.com/NotMyself/GildedRose](https://github.com/NotMyself/GildedRose)
+That repository can be found at [https://github.com/NotMyself/GildedRose](https://github.com/NotMyself/GildedRose)
+
+Adam Risius took the Kata and did the specified work as well as adding unit tests and doing some refactoring.
