@@ -4,7 +4,7 @@ namespace GildedRose.Console
 {
     public class Program
     {
-        protected internal static IList<Item> Items = new List<Item>
+        protected internal IList<Item> Items = new List<Item>
         {
             new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
             new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
@@ -25,13 +25,13 @@ namespace GildedRose.Console
 
             var app = new Program();
 
-            UpdateQuality();
+            app.UpdateQuality();
 
             System.Console.ReadKey();
 
         }
 
-        public static void UpdateQuality()
+        public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
             {
