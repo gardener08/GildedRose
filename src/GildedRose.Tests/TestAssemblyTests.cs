@@ -163,5 +163,68 @@ namespace GildedRose.Tests
             // When we are on day 10, the code is treating it as day 11 for the purposes of Backstage pass value.
             Assert.Equal(itemUnderTest.Quality, 49);
         }
+
+        [Fact]
+        public void TestBackstagePassesOnConcertDate()
+        {
+            TestAssemblyTests programInstance = new TestAssemblyTests();
+            var programItems = programInstance.Items;
+            Item itemUnderTest = programItems[4];
+            Assert.Equal(itemUnderTest.SellIn, 15);
+            Assert.Equal(itemUnderTest.Quality, 20);
+
+            // TODO: Make this a loop (15 times)
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+
+            Assert.Equal(itemUnderTest.SellIn, 0);
+            // The above fix for when we increment SellIn also affects this code.  The result should be 50 
+            // both before and after that fix, but for different reasons due to different lines of code.
+            Assert.Equal(itemUnderTest.Quality, 50);
+        }
+
+        [Fact]
+        public void TestBackstagePassesAfterConcertDate()
+        {
+            TestAssemblyTests programInstance = new TestAssemblyTests();
+            var programItems = programInstance.Items;
+            Item itemUnderTest = programItems[4];
+            Assert.Equal(itemUnderTest.SellIn, 15);
+            Assert.Equal(itemUnderTest.Quality, 20);
+
+            // TODO: Make this a loop (16 times)
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+
+            Assert.Equal(itemUnderTest.SellIn, -1);
+            Assert.Equal(itemUnderTest.Quality, 0);
+        }
     }
 }
