@@ -55,25 +55,40 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestForNoNegativeQuality()
+        public void TestForNoNegativeQualityValuesWhereQualityDecreases()
         {
+            // Scenario 1
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[2];
-            Assert.Equal(itemUnderTest.SellIn, 5);
-            Assert.Equal(itemUnderTest.Quality, 7);
+            Item itemUnderTest = programItems[0];
+            Assert.Equal(itemUnderTest.SellIn, 10);
+            Assert.Equal(itemUnderTest.Quality, 20);
 
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality(); // This shouldn't cause a quality of -1
+            for (int i = 0; i < 16; i++)
+            {
+                programInstance.UpdateQuality();
+            }
 
-            Assert.Equal(itemUnderTest.SellIn, -3); // Code instead of comments
+            Assert.Equal(itemUnderTest.SellIn, -6);
+            // Zero and not -2
             Assert.Equal(itemUnderTest.Quality, 0);
+
+            // Scenario 2
+            TestAssemblyTests programInstance2 = new TestAssemblyTests();
+            var programItems2 = programInstance2.Items;
+
+            Item secondItemUnderTest = programItems2[2];
+            Assert.Equal(secondItemUnderTest.SellIn, 5);
+            Assert.Equal(secondItemUnderTest.Quality, 7);
+
+            for (int i = 0; i < 8; i++)
+            {
+                programInstance2.UpdateQuality();
+            }
+
+            Assert.Equal(secondItemUnderTest.SellIn, -3); // Code instead of comments
+            // Zero and not -1
+            Assert.Equal(secondItemUnderTest.Quality, 0);
         }
 
         [Fact]
@@ -127,6 +142,26 @@ namespace GildedRose.Tests
             // I will forgo the general rule of making this test pass before proceeding as this is a roadblock that I can navigate around for now.
             Assert.Equal(itemUnderTest.Quality, 5);
 
+        }
+
+        /// <summary>
+        /// Given the program data that is not designed to change, Aged Brie and Backstage Passes are the only inventory items that are able to reach the max value.
+        /// </summary>
+        [Fact]
+        public void TestMaxQualityOfAgedBrie()
+        {
+            TestAssemblyTests programInstance = new TestAssemblyTests();
+            var programItems = programInstance.Items;
+            Item itemUnderTest = programItems[1];
+            Assert.Equal(itemUnderTest.SellIn, 2);
+            Assert.Equal(itemUnderTest.Quality, 0);
+
+            for (int i = 0; i < 65; i++)
+            {
+                programInstance.UpdateQuality();
+            }
+
+            Assert.Equal(itemUnderTest.Quality, 50);
         }
 
         [Fact]
