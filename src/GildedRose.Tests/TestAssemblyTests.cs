@@ -190,12 +190,6 @@ namespace GildedRose.Tests
             programInstance.UpdateQuality();
 
             Assert.Equal(itemUnderTest.SellIn, 1);
-            // This test is failing because we are incrementing the SellIn member in the wrong spot of the code.
-            // We should be doing that at the start of the loop.
-            // We are currently relying on it both before and after it is incremented, and inconsistent results will occur.
-            // I will wait to fix the code until I have more unit tests completed, as I inherited this code
-            // The actual value is currently 47 because sellIn is being incremented at the end of the day.
-            // When we are on day 10, the code is treating it as day 11 for the purposes of Backstage pass value.
             Assert.Equal(itemUnderTest.Quality, 49);
         }
 
@@ -226,8 +220,6 @@ namespace GildedRose.Tests
             programInstance.UpdateQuality();
 
             Assert.Equal(itemUnderTest.SellIn, 0);
-            // The above fix for when we increment SellIn also affects this code.  The result should be 50 
-            // both before and after that fix, but for different reasons due to different lines of code.
             Assert.Equal(itemUnderTest.Quality, 50);
         }
 
