@@ -48,29 +48,7 @@ namespace GildedRose.Console
                 else
                 // Increment increasing quality items.  Make its own method.
                 {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
+                    IncrementIncreasingQualityItems(currentItem);
                 }
 
                 // Process past sell date.  Make its own method.
@@ -115,6 +93,32 @@ namespace GildedRose.Console
             }
         }
 
+        private void IncrementIncreasingQualityItems(Item currentItem)
+        {
+            if (currentItem.Quality < 50)
+            {
+                currentItem.Quality = currentItem.Quality + 1;
+
+                if (currentItem.Name == "Backstage passes to a TAFKAL80ETC concert")
+                {
+                    if (currentItem.SellIn < 11)
+                    {
+                        if (currentItem.Quality < 50)
+                        {
+                            currentItem.Quality = currentItem.Quality + 1;
+                        }
+                    }
+
+                    if (currentItem.SellIn < 6)
+                    {
+                        if (currentItem.Quality < 50)
+                        {
+                            currentItem.Quality = currentItem.Quality + 1;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public class Item
