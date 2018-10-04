@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GildedRose.Console
 {
@@ -19,6 +20,8 @@ namespace GildedRose.Console
             new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
         };
 
+        private readonly string[] increasingValueNames = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert"};
+
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
@@ -35,6 +38,7 @@ namespace GildedRose.Console
         {
             for (var i = 0; i < Items.Count; i++)
             {
+                // Base level decrement of sell by date.
                 if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
                 {
                     Items[i].SellIn = Items[i].SellIn - 1;
@@ -49,7 +53,10 @@ namespace GildedRose.Console
                 {
                     IncrementIncreasingQualityItems(currentItem);
                 }
-                ProcessItemPastSellDate(currentItem);
+                if (currentItem.SellIn < 0)
+                {
+                    ProcessItemPastSellDate(currentItem);
+                }
             }
         }
 
@@ -93,32 +100,46 @@ namespace GildedRose.Console
 
         private void ProcessItemPastSellDate(Item currentItem)
         {
-            if (currentItem.SellIn < 0)
+            if (increasingValueNames.Contains(currentItem.Name))
             {
-                if (currentItem.Name != "Aged Brie")
+                ProcessIncreasingValueItemPastSellDate(currentItem);
+            }
+            else
+            {
+                ProcessDecreasingOrStableValueItemPastSellDate(currentItem);
+            }
+        }
+
+        private void ProcessDecreasingOrStableValueItemPastSellDate(Item currentItem)
+        { 
+            if (currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
+            {
+                if (currentItem.Quality > 0)
                 {
-                    if (currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
+                    if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
                     {
-                        if (currentItem.Quality > 0)
-                        {
-                            if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                currentItem.Quality = currentItem.Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        currentItem.Quality = currentItem.Quality - currentItem.Quality;
+                        currentItem.Quality = currentItem.Quality - 1;
                     }
                 }
-                else
+            }
+            else
+            {
+                currentItem.Quality = currentItem.Quality - currentItem.Quality;
+            }
+        }
+
+        private void ProcessIncreasingValueItemPastSellDate(Item currentItem)
+        {
+            if (currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
+            {
+                if (currentItem.Quality < 50)
                 {
-                    if (currentItem.Quality < 50)
-                    {
-                        currentItem.Quality = currentItem.Quality + 1;
-                    }
+                    currentItem.Quality = currentItem.Quality + 1;
                 }
+            }
+            else
+            {
+                currentItem.Quality = currentItem.Quality - currentItem.Quality;
             }
         }
     }
