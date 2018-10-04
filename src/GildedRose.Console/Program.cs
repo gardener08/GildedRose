@@ -20,7 +20,7 @@ namespace GildedRose.Console
             new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
         };
 
-        private readonly string[] increasingValueNames = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert"};
+        private readonly string[] _increasingValueNames = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert"};
 
         static void Main(string[] args)
         {
@@ -100,7 +100,7 @@ namespace GildedRose.Console
 
         private void ProcessItemPastSellDate(Item currentItem)
         {
-            if (increasingValueNames.Contains(currentItem.Name))
+            if (_increasingValueNames.Contains(currentItem.Name))
             {
                 ProcessIncreasingValueItemPastSellDate(currentItem);
             }
