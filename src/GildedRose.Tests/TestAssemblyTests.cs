@@ -134,13 +134,9 @@ namespace GildedRose.Tests
             programInstance.UpdateQuality();
 
             Assert.Equal(itemUnderTest.SellIn, -3);
-            // The following is failing.  The acceptance criteria specifies that "Aged Brie" actually increases in Quality the older it gets.
-            // I assumed that means by one quality point.  It is increasing by two after passing its expiration date.
-            // Because I can't find this behavior specified in the story, I will need to have a conversation with the Product Owner to verify
-            // that this is intended behavior and then we can either put in a fix or update the story.
-
-            // I will forgo the general rule of making this test pass before proceeding as this is a roadblock that I can navigate around for now.
-            Assert.Equal(itemUnderTest.Quality, 5);
+            // The hypothetical product owner has updated the requirements to reflect that Aged Brie increases in quality by 2
+            // after the sell by date has passed.
+            Assert.Equal(itemUnderTest.Quality, 8);
 
         }
 
