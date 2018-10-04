@@ -112,14 +112,11 @@ namespace GildedRose.Console
 
         private void ProcessDecreasingOrStableValueItemPastSellDate(Item currentItem)
         { 
-            if (currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
+            if (currentItem.Quality > 0)
             {
-                if (currentItem.Quality > 0)
+                if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
                 {
-                    if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        currentItem.Quality = currentItem.Quality - 1;
-                    }
+                    currentItem.Quality = currentItem.Quality - 1;
                 }
             }
             else
