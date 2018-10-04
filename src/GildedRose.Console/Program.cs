@@ -40,17 +40,13 @@ namespace GildedRose.Console
                     Items[i].SellIn = Items[i].SellIn - 1;
                 }
 
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                Item currentItem = Items[i];
+                if (currentItem.Name != "Aged Brie" && currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
+                    DecrementDecreasingQualityItem(currentItem);
                 }
                 else
+                // Increment increasing quality items.  Make its own method.
                 {
                     if (Items[i].Quality < 50)
                     {
@@ -77,6 +73,7 @@ namespace GildedRose.Console
                     }
                 }
 
+                // Process past sell date.  Make its own method.
                 if (Items[i].SellIn < 0)
                 {
                     if (Items[i].Name != "Aged Brie")
@@ -103,6 +100,17 @@ namespace GildedRose.Console
                             Items[i].Quality = Items[i].Quality + 1;
                         }
                     }
+                }
+            }
+        }
+
+        private void DecrementDecreasingQualityItem(Item currentItem)
+        {
+            if (currentItem.Quality > 0)
+            {
+                if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
+                {
+                    currentItem.Quality = currentItem.Quality - 1;
                 }
             }
         }
