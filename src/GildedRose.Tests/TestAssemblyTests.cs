@@ -249,5 +249,40 @@ namespace GildedRose.Tests
             Assert.Equal(itemUnderTest.SellIn, -1);
             Assert.Equal(itemUnderTest.Quality, 0);
         }
+
+        [Fact]
+        public void TestForDecrementOfQualityOfConjuredItems()
+        {
+            TestAssemblyTests programInstance = new TestAssemblyTests();
+            var programItems = programInstance.Items;
+            Item standardItem = programItems[5];
+            Assert.Equal(standardItem.SellIn, 3);
+            Assert.Equal(standardItem.Quality, 6);
+
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+
+            Assert.Equal(standardItem.SellIn, 0);
+            Assert.Equal(standardItem.Quality, 0);
+        }
+
+        [Fact]
+        public void TestForDecrementOfQualityOfConjuredItemsPastSellByDate()
+        {
+            TestAssemblyTests programInstance = new TestAssemblyTests();
+            var programItems = programInstance.Items;
+            Item standardItem = programItems[5];
+            Assert.Equal(standardItem.SellIn, 3);
+            Assert.Equal(standardItem.Quality, 6);
+
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+            programInstance.UpdateQuality();
+
+            Assert.Equal(standardItem.SellIn, -1);
+            Assert.Equal(standardItem.Quality, 0);
+        }
     }
 }
