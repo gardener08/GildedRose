@@ -64,7 +64,11 @@ namespace GildedRose.Console
         {
             if (currentItem.Quality > 0)
             {
-                if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
+                if (currentItem.Name.ToUpper().StartsWith("CONJURED"))
+                {
+                    currentItem.Quality = currentItem.Quality - 2;
+                }
+                else if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
                 {
                     currentItem.Quality = currentItem.Quality - 1;
                 }
@@ -114,7 +118,8 @@ namespace GildedRose.Console
         { 
             if (currentItem.Quality > 0)
             {
-                if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
+                // Conjured already decreases by two.
+                if ((currentItem.Name != "Sulfuras, Hand of Ragnaros") && (!(currentItem.Name.ToUpper().StartsWith("CONJURED"))))
                 {
                     currentItem.Quality = currentItem.Quality - 1;
                 }
