@@ -7,12 +7,13 @@ namespace GildedRose.Tests
 {
     public class TestAssemblyTests : Program
     {
-        [Fact]
-        public void TestTheTruth()
+        private void RunUpdateQuality(int timesToRun, Program programInstance)
         {
-            Assert.True(true);
+            for (int i = 0; i < timesToRun; i++)
+            {
+                programInstance.UpdateQuality();
+            }
         }
-
         [Fact]
         public void TestSetupItems()
         {
@@ -64,10 +65,8 @@ namespace GildedRose.Tests
             Assert.Equal(itemUnderTest.SellIn, 10);
             Assert.Equal(itemUnderTest.Quality, 20);
 
-            for (int i = 0; i < 16; i++)
-            {
-                programInstance.UpdateQuality();
-            }
+            int timesToRun = 16;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(itemUnderTest.SellIn, -6);
             // Zero and not -2
@@ -81,10 +80,8 @@ namespace GildedRose.Tests
             Assert.Equal(secondItemUnderTest.SellIn, 5);
             Assert.Equal(secondItemUnderTest.Quality, 7);
 
-            for (int i = 0; i < 8; i++)
-            {
-                programInstance2.UpdateQuality();
-            }
+            int timesToRun2 = 8;
+            RunUpdateQuality(timesToRun2, programInstance2);
 
             Assert.Equal(secondItemUnderTest.SellIn, -3); // Code instead of comments
             // Zero and not -1
@@ -99,20 +96,10 @@ namespace GildedRose.Tests
             Item itemUnderTest = programItems[0];
             Assert.Equal(itemUnderTest.SellIn, 10);
             Assert.Equal(itemUnderTest.Quality, 20);
-
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality(); // Sell By date reached
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
+            
+            // Sell By date reached on tenth run.
+            int timesToRun = 13;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(itemUnderTest.SellIn, -3);
             Assert.Equal(itemUnderTest.Quality, 4);
@@ -127,11 +114,8 @@ namespace GildedRose.Tests
             Assert.Equal(itemUnderTest.SellIn, 2);
             Assert.Equal(itemUnderTest.Quality, 0);
 
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
+            int timesToRun = 5;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(itemUnderTest.SellIn, -3);
             // The hypothetical product owner has updated the requirements to reflect that Aged Brie increases in quality by 2
@@ -152,10 +136,8 @@ namespace GildedRose.Tests
             Assert.Equal(itemUnderTest.SellIn, 2);
             Assert.Equal(itemUnderTest.Quality, 0);
 
-            for (int i = 0; i < 65; i++)
-            {
-                programInstance.UpdateQuality();
-            }
+            int timesToRun = 65;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(itemUnderTest.Quality, 50);
         }
@@ -169,21 +151,8 @@ namespace GildedRose.Tests
             Assert.Equal(itemUnderTest.SellIn, 15);
             Assert.Equal(itemUnderTest.Quality, 20);
 
-            // TODO: Make this a loop (14 times)
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
+            int timesToRun = 14;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(itemUnderTest.SellIn, 1);
             Assert.Equal(itemUnderTest.Quality, 49);
@@ -198,22 +167,8 @@ namespace GildedRose.Tests
             Assert.Equal(itemUnderTest.SellIn, 15);
             Assert.Equal(itemUnderTest.Quality, 20);
 
-            // TODO: Make this a loop (15 times)
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
+            int timesToRun = 15;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(itemUnderTest.SellIn, 0);
             Assert.Equal(itemUnderTest.Quality, 50);
@@ -228,23 +183,8 @@ namespace GildedRose.Tests
             Assert.Equal(itemUnderTest.SellIn, 15);
             Assert.Equal(itemUnderTest.Quality, 20);
 
-            // TODO: Make this a loop (16 times)
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
+            int timesToRun = 16;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(itemUnderTest.SellIn, -1);
             Assert.Equal(itemUnderTest.Quality, 0);
@@ -259,9 +199,8 @@ namespace GildedRose.Tests
             Assert.Equal(standardItem.SellIn, 3);
             Assert.Equal(standardItem.Quality, 6);
 
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
+            int timesToRun = 3;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(standardItem.SellIn, 0);
             Assert.Equal(standardItem.Quality, 0);
@@ -276,13 +215,12 @@ namespace GildedRose.Tests
             Assert.Equal(standardItem.SellIn, 3);
             Assert.Equal(standardItem.Quality, 6);
 
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
-            programInstance.UpdateQuality();
+            int timesToRun = 4;
+            RunUpdateQuality(timesToRun, programInstance);
 
             Assert.Equal(standardItem.SellIn, -1);
             Assert.Equal(standardItem.Quality, 0);
         }
     }
 }
+ 
