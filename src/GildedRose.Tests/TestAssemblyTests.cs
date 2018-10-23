@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using Xunit;
 using GildedRose.Console;
 
 namespace GildedRose.Tests
 {
-    public class TestAssemblyTests : Program
+    public class TestAssemblyTests
     {
         private void RunUpdateQuality(int timesToRun, Program programInstance)
         {
@@ -18,15 +17,16 @@ namespace GildedRose.Tests
         [Fact]
         public void TestSetupItems()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            Assert.NotNull(programInstance.Items);
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
+            Assert.NotNull(programItems);
         }
 
         [Fact]
         public void ProgrammerDidNotChangeItemCollection()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item dexterityVest = programItems[0];
             Item agedBrie = programItems[1];
             Item standardItemMongooseElixir = programItems[2];
@@ -57,8 +57,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestLegendaryItem()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item legendaryItemSulfuras = programItems[3];
 
             int currentSellIn = legendaryItemSulfuras.SellIn;
@@ -76,8 +76,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestForDecrementOfQualityOfStandardItem()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item standardItemMongooseElixir = programItems[2];
 
             programInstance.UpdateQuality();
@@ -92,8 +92,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestForNoNegativeQualityValuesWhereQualityDecreasesDexterityVest()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item dexterityVest = programItems[0];
 
             int timesToRun = 16;
@@ -111,8 +111,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestForNoNegativeQualityValuesWhereQualityDecreasesMongooseElixir()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item mongooseElixir = programItems[2];
 
             int timesToRun = 8;
@@ -129,8 +129,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestForDoubleSpeedQualityDegradationAfterSellByDate()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item dexterityVest = programItems[0];
             
             // Sell By date reached on tenth run.
@@ -147,8 +147,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestIncreasingQualityOfAgedBrie()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item agedBrie = programItems[1];
 
             int timesToRun = 5;
@@ -170,8 +170,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestMaxQualityOfAgedBrie()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item agedBrie = programItems[1];
 
             int timesToRun = 65;
@@ -185,8 +185,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestBackstagePassesOneDayBeforeConcert()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item backstagePasses = programItems[4];
 
             int timesToRun = 14;
@@ -202,8 +202,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestBackstagePassesOnConcertDate()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item backstagePasses = programItems[4];
 
             int timesToRun = 15;
@@ -219,8 +219,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestBackstagePassesAfterConcertDate()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item backstagePasses = programItems[4];
 
             int timesToRun = 16;
@@ -236,8 +236,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestForDecrementOfQualityOfConjuredItems()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item conjuredItem = programItems[5];
 
             int timesToRun = 3;
@@ -253,8 +253,8 @@ namespace GildedRose.Tests
         [Fact]
         public void TestForDecrementOfQualityOfConjuredItemsPastSellByDate()
         {
-            TestAssemblyTests programInstance = new TestAssemblyTests();
-            var programItems = programInstance.Items;
+            Program programInstance = new Program();
+            IList<Item> programItems = programInstance.GetItemsForSale();
             Item conjuredItem = programItems[5];
 
             int timesToRun = 4;

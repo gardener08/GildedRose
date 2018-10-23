@@ -5,7 +5,7 @@ namespace GildedRose.Console
 {
     public class Program
     {
-        protected internal IList<Item> Items = new List<Item>
+        private readonly IList<Item> _items = new List<Item>
         {
             new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
             new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
@@ -26,7 +26,7 @@ namespace GildedRose.Console
         {
             System.Console.WriteLine("OMGHAI!");
 
-            var app = new Program();
+            Program app = new Program();
 
             app.UpdateQuality();
 
@@ -34,17 +34,22 @@ namespace GildedRose.Console
 
         }
 
+        public IList<Item> GetItemsForSale()
+        {
+            return _items;
+        }
+
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            for (int i = 0; i < _items.Count; i++)
             {
                 // Base level decrement of sell by date.
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (_items[i].Name != "Sulfuras, Hand of Ragnaros")
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    _items[i].SellIn = _items[i].SellIn - 1;
                 }
 
-                Item currentItem = Items[i];
+                Item currentItem = _items[i];
                 if (currentItem.Name != "Aged Brie" && currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
                     DecrementDecreasingQualityItem(currentItem);
@@ -145,14 +150,4 @@ namespace GildedRose.Console
             }
         }
     }
-
-    public class Item
-    {
-        public string Name { get; set; }
-
-        public int SellIn { get; set; }
-
-        public int Quality { get; set; }
-    }
-
 }
