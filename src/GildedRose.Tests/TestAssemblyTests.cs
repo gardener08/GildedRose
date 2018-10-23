@@ -82,8 +82,11 @@ namespace GildedRose.Tests
 
             programInstance.UpdateQuality();
 
-            Assert.Equal(standardItemMongooseElixir.SellIn, 4);
-            Assert.Equal(standardItemMongooseElixir.Quality, 6);
+            int expectedSellInAfterOneRunOfUpdateQuality = 4;
+            int expectedQualityAfterOneRunOfUpdateQuality = 6;
+
+            Assert.Equal(expectedSellInAfterOneRunOfUpdateQuality, standardItemMongooseElixir.SellIn);
+            Assert.Equal(expectedQualityAfterOneRunOfUpdateQuality, standardItemMongooseElixir.Quality);
         }
 
         [Fact]
@@ -96,9 +99,12 @@ namespace GildedRose.Tests
             int timesToRun = 16;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(dexterityVest.SellIn, -6);
+            int expectedSellIn = -6;
             // Reflects bugfix to original Kata - Zero and not -2
-            Assert.Equal(dexterityVest.Quality, 0);
+            int expectedQuality = 0;
+
+            Assert.Equal(expectedSellIn, dexterityVest.SellIn);
+            Assert.Equal(expectedQuality, dexterityVest.Quality);
 
         }
 
@@ -112,9 +118,12 @@ namespace GildedRose.Tests
             int timesToRun = 8;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(mongooseElixir.SellIn, -3);
+            int expectedSellIn = -3;
+            int expectedQuality = 0;
+
+            Assert.Equal(expectedSellIn, mongooseElixir.SellIn);
             // Reflects bugfix to original Kata - Zero and not -1
-            Assert.Equal(mongooseElixir.Quality, 0);
+            Assert.Equal(expectedQuality, mongooseElixir.Quality);
         }
 
         [Fact]
@@ -128,8 +137,11 @@ namespace GildedRose.Tests
             int timesToRun = 13;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(dexterityVest.SellIn, -3);
-            Assert.Equal(dexterityVest.Quality, 4);
+            int expectedSellIn = -3;
+            int expectedQuality = 4;
+
+            Assert.Equal(expectedSellIn, dexterityVest.SellIn);
+            Assert.Equal(expectedQuality, dexterityVest.Quality);
         }
 
         [Fact]
@@ -142,10 +154,13 @@ namespace GildedRose.Tests
             int timesToRun = 5;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(agedBrie.SellIn, -3);
+            int expectedSellIn = -3;
             // The hypothetical product owner has updated the requirements to reflect that Aged Brie increases in quality by 2
             // after the sell by date has passed.
-            Assert.Equal(agedBrie.Quality, 8);
+            int expectedQuality = 8;
+
+            Assert.Equal(expectedSellIn, agedBrie.SellIn);
+            Assert.Equal(expectedQuality, agedBrie.Quality);
 
         }
 
@@ -162,7 +177,9 @@ namespace GildedRose.Tests
             int timesToRun = 65;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(agedBrie.Quality, 50);
+            int expectedQuality = 50;
+
+            Assert.Equal(expectedQuality, agedBrie.Quality);
         }
 
         [Fact]
@@ -175,8 +192,11 @@ namespace GildedRose.Tests
             int timesToRun = 14;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(backstagePasses.SellIn, 1);
-            Assert.Equal(backstagePasses.Quality, 49);
+            int expectedSellIn = 1;
+            int expectedQuality = 49;
+
+            Assert.Equal(expectedSellIn, backstagePasses.SellIn);
+            Assert.Equal(expectedQuality, backstagePasses.Quality);
         }
 
         [Fact]
@@ -189,8 +209,11 @@ namespace GildedRose.Tests
             int timesToRun = 15;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(backstagePasses.SellIn, 0);
-            Assert.Equal(backstagePasses.Quality, 50);
+            int expectedSellIn = 0;
+            int expectedQuality = 50;
+
+            Assert.Equal(expectedSellIn, backstagePasses.SellIn);
+            Assert.Equal(expectedQuality, backstagePasses.Quality);
         }
 
         [Fact]
@@ -203,8 +226,11 @@ namespace GildedRose.Tests
             int timesToRun = 16;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(backstagePasses.SellIn, -1);
-            Assert.Equal(backstagePasses.Quality, 0);
+            int expectedSellIn = -1;
+            int expectedQuality = 0;
+
+            Assert.Equal(expectedSellIn, backstagePasses.SellIn);
+            Assert.Equal(expectedQuality, backstagePasses.Quality);
         }
 
         [Fact]
@@ -217,8 +243,11 @@ namespace GildedRose.Tests
             int timesToRun = 3;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(conjuredItem.SellIn, 0);
-            Assert.Equal(conjuredItem.Quality, 0);
+            int expectedSellIn = 0;
+            int expectedQuality = 0;
+
+            Assert.Equal(expectedSellIn, conjuredItem.SellIn);
+            Assert.Equal(expectedQuality, conjuredItem.Quality);
         }
 
         [Fact]
@@ -231,8 +260,11 @@ namespace GildedRose.Tests
             int timesToRun = 4;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(conjuredItem.SellIn, -1);
-            Assert.Equal(conjuredItem.Quality, 0);
+            int expectedSellIn = -1;
+            int expectedQuality = 0;
+
+            Assert.Equal(expectedSellIn, conjuredItem.SellIn);
+            Assert.Equal(expectedQuality, conjuredItem.Quality);
         }
     }
 }
