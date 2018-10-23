@@ -14,6 +14,7 @@ namespace GildedRose.Tests
                 programInstance.UpdateQuality();
             }
         }
+
         [Fact]
         public void TestSetupItems()
         {
@@ -22,19 +23,51 @@ namespace GildedRose.Tests
         }
 
         [Fact]
+        public void ProgrammerDidNotChangeItemCollection()
+        {
+            TestAssemblyTests programInstance = new TestAssemblyTests();
+            var programItems = programInstance.Items;
+            Item dexterityVest = programItems[0];
+            Item agedBrie = programItems[1];
+            Item standardItemMongooseElixir = programItems[2];
+            Item legendaryItemSulfuras = programItems[3];
+            Item backstagePasses = programItems[4];
+            Item conjuredItem = programItems[5];
+
+            Assert.Equal(dexterityVest.SellIn, 10);
+            Assert.Equal(dexterityVest.Quality, 20);
+
+            Assert.Equal(agedBrie.SellIn, 2);
+            Assert.Equal(agedBrie.Quality, 0);
+
+            Assert.Equal(standardItemMongooseElixir.SellIn, 5);
+            Assert.Equal(standardItemMongooseElixir.Quality, 7);
+
+            Assert.Equal(legendaryItemSulfuras.SellIn, 0);
+            Assert.Equal(legendaryItemSulfuras.Quality, 80);
+            Assert.Contains("Sulfuras", legendaryItemSulfuras.Name);
+
+            Assert.Equal(backstagePasses.SellIn, 15);
+            Assert.Equal(backstagePasses.Quality, 20);
+
+            Assert.Equal(conjuredItem.SellIn, 3);
+            Assert.Equal(conjuredItem.Quality, 6);
+        }
+
+        [Fact]
         public void TestLegendaryItem()
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item legendaryItem = programItems[3];
-            Assert.Contains("Sulfuras", legendaryItem.Name);
-            int currentSellIn = legendaryItem.SellIn;
-            int currentQuality = legendaryItem.Quality;
+            Item legendaryItemSulfuras = programItems[3];
+
+            int currentSellIn = legendaryItemSulfuras.SellIn;
+            int currentQuality = legendaryItemSulfuras.Quality;
 
             programInstance.UpdateQuality();
 
-            int newSellIn = legendaryItem.SellIn;
-            int newQuality = legendaryItem.Quality;
+            int newSellIn = legendaryItemSulfuras.SellIn;
+            int newQuality = legendaryItemSulfuras.Quality;
 
             Assert.Equal(currentSellIn, newSellIn);
             Assert.Equal(currentQuality, newQuality);
@@ -45,47 +78,43 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item standardItem = programItems[2];
-            Assert.Equal(standardItem.SellIn, 5);
-            Assert.Equal(standardItem.Quality, 7);
+            Item standardItemMongooseElixir = programItems[2];
 
             programInstance.UpdateQuality();
 
-            Assert.Equal(standardItem.SellIn, 4);
-            Assert.Equal(standardItem.Quality, 6);
+            Assert.Equal(standardItemMongooseElixir.SellIn, 4);
+            Assert.Equal(standardItemMongooseElixir.Quality, 6);
         }
 
         [Fact]
-        public void TestForNoNegativeQualityValuesWhereQualityDecreases()
+        public void TestForNoNegativeQualityValuesWhereQualityDecreasesDexterityVest()
         {
-            // Scenario 1
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[0];
-            Assert.Equal(itemUnderTest.SellIn, 10);
-            Assert.Equal(itemUnderTest.Quality, 20);
+            Item dexterityVest = programItems[0];
 
             int timesToRun = 16;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(itemUnderTest.SellIn, -6);
-            // Zero and not -2
-            Assert.Equal(itemUnderTest.Quality, 0);
+            Assert.Equal(dexterityVest.SellIn, -6);
+            // Reflects bugfix to original Kata - Zero and not -2
+            Assert.Equal(dexterityVest.Quality, 0);
 
-            // Scenario 2
-            TestAssemblyTests programInstance2 = new TestAssemblyTests();
-            var programItems2 = programInstance2.Items;
+        }
 
-            Item secondItemUnderTest = programItems2[2];
-            Assert.Equal(secondItemUnderTest.SellIn, 5);
-            Assert.Equal(secondItemUnderTest.Quality, 7);
+        [Fact]
+        public void TestForNoNegativeQualityValuesWhereQualityDecreasesMongooseElixir()
+        {
+            TestAssemblyTests programInstance = new TestAssemblyTests();
+            var programItems = programInstance.Items;
+            Item mongooseElixir = programItems[2];
 
-            int timesToRun2 = 8;
-            RunUpdateQuality(timesToRun2, programInstance2);
+            int timesToRun = 8;
+            RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(secondItemUnderTest.SellIn, -3); // Code instead of comments
-            // Zero and not -1
-            Assert.Equal(secondItemUnderTest.Quality, 0);
+            Assert.Equal(mongooseElixir.SellIn, -3);
+            // Reflects bugfix to original Kata - Zero and not -1
+            Assert.Equal(mongooseElixir.Quality, 0);
         }
 
         [Fact]
@@ -93,16 +122,14 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[0];
-            Assert.Equal(itemUnderTest.SellIn, 10);
-            Assert.Equal(itemUnderTest.Quality, 20);
+            Item dexterityVest = programItems[0];
             
             // Sell By date reached on tenth run.
             int timesToRun = 13;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(itemUnderTest.SellIn, -3);
-            Assert.Equal(itemUnderTest.Quality, 4);
+            Assert.Equal(dexterityVest.SellIn, -3);
+            Assert.Equal(dexterityVest.Quality, 4);
         }
 
         [Fact]
@@ -110,17 +137,15 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[1];
-            Assert.Equal(itemUnderTest.SellIn, 2);
-            Assert.Equal(itemUnderTest.Quality, 0);
+            Item agedBrie = programItems[1];
 
             int timesToRun = 5;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(itemUnderTest.SellIn, -3);
+            Assert.Equal(agedBrie.SellIn, -3);
             // The hypothetical product owner has updated the requirements to reflect that Aged Brie increases in quality by 2
             // after the sell by date has passed.
-            Assert.Equal(itemUnderTest.Quality, 8);
+            Assert.Equal(agedBrie.Quality, 8);
 
         }
 
@@ -132,14 +157,12 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[1];
-            Assert.Equal(itemUnderTest.SellIn, 2);
-            Assert.Equal(itemUnderTest.Quality, 0);
+            Item agedBrie = programItems[1];
 
             int timesToRun = 65;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(itemUnderTest.Quality, 50);
+            Assert.Equal(agedBrie.Quality, 50);
         }
 
         [Fact]
@@ -147,15 +170,13 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[4];
-            Assert.Equal(itemUnderTest.SellIn, 15);
-            Assert.Equal(itemUnderTest.Quality, 20);
+            Item backstagePasses = programItems[4];
 
             int timesToRun = 14;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(itemUnderTest.SellIn, 1);
-            Assert.Equal(itemUnderTest.Quality, 49);
+            Assert.Equal(backstagePasses.SellIn, 1);
+            Assert.Equal(backstagePasses.Quality, 49);
         }
 
         [Fact]
@@ -163,15 +184,13 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[4];
-            Assert.Equal(itemUnderTest.SellIn, 15);
-            Assert.Equal(itemUnderTest.Quality, 20);
+            Item backstagePasses = programItems[4];
 
             int timesToRun = 15;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(itemUnderTest.SellIn, 0);
-            Assert.Equal(itemUnderTest.Quality, 50);
+            Assert.Equal(backstagePasses.SellIn, 0);
+            Assert.Equal(backstagePasses.Quality, 50);
         }
 
         [Fact]
@@ -179,15 +198,13 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item itemUnderTest = programItems[4];
-            Assert.Equal(itemUnderTest.SellIn, 15);
-            Assert.Equal(itemUnderTest.Quality, 20);
+            Item backstagePasses = programItems[4];
 
             int timesToRun = 16;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(itemUnderTest.SellIn, -1);
-            Assert.Equal(itemUnderTest.Quality, 0);
+            Assert.Equal(backstagePasses.SellIn, -1);
+            Assert.Equal(backstagePasses.Quality, 0);
         }
 
         [Fact]
@@ -195,15 +212,13 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item standardItem = programItems[5];
-            Assert.Equal(standardItem.SellIn, 3);
-            Assert.Equal(standardItem.Quality, 6);
+            Item conjuredItem = programItems[5];
 
             int timesToRun = 3;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(standardItem.SellIn, 0);
-            Assert.Equal(standardItem.Quality, 0);
+            Assert.Equal(conjuredItem.SellIn, 0);
+            Assert.Equal(conjuredItem.Quality, 0);
         }
 
         [Fact]
@@ -211,15 +226,13 @@ namespace GildedRose.Tests
         {
             TestAssemblyTests programInstance = new TestAssemblyTests();
             var programItems = programInstance.Items;
-            Item standardItem = programItems[5];
-            Assert.Equal(standardItem.SellIn, 3);
-            Assert.Equal(standardItem.Quality, 6);
+            Item conjuredItem = programItems[5];
 
             int timesToRun = 4;
             RunUpdateQuality(timesToRun, programInstance);
 
-            Assert.Equal(standardItem.SellIn, -1);
-            Assert.Equal(standardItem.Quality, 0);
+            Assert.Equal(conjuredItem.SellIn, -1);
+            Assert.Equal(conjuredItem.Quality, 0);
         }
     }
 }
