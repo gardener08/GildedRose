@@ -15,7 +15,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestSetupItems()
+        public void DoesSetupOfItemsWorkCorrectly()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -55,7 +55,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestLegendaryItem()
+        public void LegendaryItemNoChangeAfterUpdatingQuality()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -74,7 +74,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestForDecrementOfQualityOfStandardItem()
+        public void DecrementQualityOfStandardItem()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -90,7 +90,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestForNoNegativeQualityValuesWhereQualityDecreasesDexterityVest()
+        public void NoNegativeQualityValuesWhereQualityDecreasesOnDexterityVest()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -109,7 +109,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestForNoNegativeQualityValuesWhereQualityDecreasesMongooseElixir()
+        public void NoNegativeQualityValuesWhereQualityDecreasesOnMongooseElixir()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -127,7 +127,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestForDoubleSpeedQualityDegradationAfterSellByDate()
+        public void DoubleSpeedQualityDegradationAfterSellByDate()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -145,7 +145,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestIncreasingQualityOfAgedBrie()
+        public void IncreasingQualityOfAgedBrie()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -168,7 +168,7 @@ namespace GildedRose.Tests
         /// Given the program data that is not designed to change, Aged Brie and Backstage Passes are the only inventory items that are able to reach the max value.
         /// </summary>
         [Fact]
-        public void TestMaxQualityOfAgedBrie()
+        public void MaxQualityOfAgedBrie()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -183,7 +183,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestBackstagePassesOneDayBeforeConcert()
+        public void BackstagePassesOneDayBeforeConcert()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -200,7 +200,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestBackstagePassesOnConcertDate()
+        public void BackstagePassesOnConcertDate()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -217,7 +217,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestBackstagePassesAfterConcertDate()
+        public void BackstagePassesAfterConcertDate()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -234,7 +234,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestForDecrementOfQualityOfConjuredItems()
+        public void DecrementQualityOfConjuredItems()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
@@ -251,7 +251,7 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void TestForDecrementOfQualityOfConjuredItemsPastSellByDate()
+        public void DecrementQualityOfConjuredItemsPastSellByDate()
         {
             Program programInstance = new Program();
             IList<Item> programItems = programInstance.GetItemsForSale();
