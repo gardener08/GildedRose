@@ -17,6 +17,10 @@ namespace GildedRose.Console
         public void UpdateItemQuality()
         {
             _dailyCloseItem.Quality = _dailyCloseItem.Quality - 2;
+            if (_dailyCloseItem.SellIn <= 0)
+            {
+                _dailyCloseItem.Quality = _dailyCloseItem.Quality - _dailyCloseItem.Quality;
+            }
         }
     }
 }

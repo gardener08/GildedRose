@@ -46,6 +46,7 @@
     <Compile Include="DecreasingQualityItem.cs" />
     <Compile Include="IDailyCloseItem.cs" />
     <Compile Include="IncreasingQualityItem.cs" />
+    <Compile Include="IncreasingQualityItemDoublesAfterExpiration.cs" />
     <Compile Include="IncreasingQualityWithExpirationItem.cs" />
     <Compile Include="InventoryData.cs" />
     <Compile Include="InventoryManagement.cs" />

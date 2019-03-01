@@ -2,10 +2,10 @@
 
 namespace GildedRose.Console
 {
-    public class DecreasingQualityItem : IDailyCloseItem
+    public class IncreasingQualityItemDoublesAfterExpiration : IDailyCloseItem
     {
         private InventoryItem _dailyCloseItem = null;
-        public DecreasingQualityItem(InventoryItem itemToUpdate)
+        public IncreasingQualityItemDoublesAfterExpiration(InventoryItem itemToUpdate)
         {
             _dailyCloseItem = itemToUpdate;
         }
@@ -13,18 +13,18 @@ namespace GildedRose.Console
         {
             _dailyCloseItem.SellIn = _dailyCloseItem.SellIn - 1;
         }
+
         public void UpdateItemQuality()
         {
-            _dailyCloseItem.Quality = _dailyCloseItem.Quality - 1;
-            if (_dailyCloseItem.SellIn < 0)
+            if (_dailyCloseItem.Quality < 50)
             {
-                if (_dailyCloseItem.Quality > 0)
+                if (_dailyCloseItem.SellIn < 0)
                 {
-                    _dailyCloseItem.Quality = _dailyCloseItem.Quality - 1;
+                    _dailyCloseItem.Quality = _dailyCloseItem.Quality + 2;
                 }
                 else
                 {
-                    _dailyCloseItem.Quality = _dailyCloseItem.Quality - _dailyCloseItem.Quality;
+                    _dailyCloseItem.Quality = _dailyCloseItem.Quality + 1;
                 }
             }
         }

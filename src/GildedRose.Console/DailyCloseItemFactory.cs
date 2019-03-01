@@ -12,7 +12,7 @@ namespace GildedRose.Console
         {
             if ("Aged Brie".Equals(inventoryItem.Name))
             {
-                return new IncreasingQualityItem(inventoryItem);
+                return new IncreasingQualityItemDoublesAfterExpiration(inventoryItem);
             }
             else if ("Sulfuras, Hand of Ragnaros".Equals(inventoryItem.Name))
             {
