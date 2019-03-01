@@ -1,55 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GildedRose.Console
 {
-    public class Program
+    public class InventoryManagement
     {
-        private readonly IList<Item> _items = new List<Item>
+        public InventoryManagement()
         {
-            new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-            new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-            new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-            new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-            new Item
-            {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
-                SellIn = 15,
-                Quality = 20
-            },
-            new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-        };
-
-        private readonly string[] _increasingValueNames = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert"};
-
-        static void Main(string[] args)
-        {
-            System.Console.WriteLine("OMGHAI!");
-
-            Program app = new Program();
-
-            app.UpdateQuality();
-
-            System.Console.ReadKey();
-
+            InventoryData inventoryDalInventory = new InventoryData();
+            _inventoryItems = inventoryDalInventory.GetInventoryItems();
         }
 
-        public IList<Item> GetItemsForSale()
+        private readonly string[] _increasingValueNames = { "Aged Brie", "Backstage passes to a TAFKAL80ETC concert" };
+        private readonly IList<InventoryItem> _inventoryItems = null;
+
+        public IList<InventoryItem> getInventoryItems()
         {
-            return _items;
+            return _inventoryItems;
         }
 
         public void UpdateQuality()
         {
-            for (int i = 0; i < _items.Count; i++)
+            for (int i = 0; i < _inventoryItems.Count; i++)
             {
                 // Base level decrement of sell by date.
-                if (_items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (_inventoryItems[i].Name != "Sulfuras, Hand of Ragnaros")
                 {
-                    _items[i].SellIn = _items[i].SellIn - 1;
+                    _inventoryItems[i].SellIn = _inventoryItems[i].SellIn - 1;
                 }
 
-                Item currentItem = _items[i];
+                InventoryItem currentItem = _inventoryItems[i];
                 if (currentItem.Name != "Aged Brie" && currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
                     DecrementDecreasingQualityItem(currentItem);
@@ -65,7 +48,7 @@ namespace GildedRose.Console
             }
         }
 
-        private void DecrementDecreasingQualityItem(Item currentItem)
+        private void DecrementDecreasingQualityItem(InventoryItem currentItem)
         {
             if (currentItem.Quality > 0)
             {
@@ -80,7 +63,7 @@ namespace GildedRose.Console
             }
         }
 
-        private void IncrementIncreasingQualityItems(Item currentItem)
+        private void IncrementIncreasingQualityItems(InventoryItem currentItem)
         {
             if (currentItem.Quality < 50)
             {
@@ -107,7 +90,7 @@ namespace GildedRose.Console
             }
         }
 
-        private void ProcessItemPastSellDate(Item currentItem)
+        private void ProcessItemPastSellDate(InventoryItem currentItem)
         {
             if (_increasingValueNames.Contains(currentItem.Name))
             {
@@ -119,8 +102,8 @@ namespace GildedRose.Console
             }
         }
 
-        private void ProcessDecreasingOrStableValueItemPastSellDate(Item currentItem)
-        { 
+        private void ProcessDecreasingOrStableValueItemPastSellDate(InventoryItem currentItem)
+        {
             if (currentItem.Quality > 0)
             {
                 // Conjured already decreases by two.
@@ -135,7 +118,7 @@ namespace GildedRose.Console
             }
         }
 
-        private void ProcessIncreasingValueItemPastSellDate(Item currentItem)
+        private void ProcessIncreasingValueItemPastSellDate(InventoryItem currentItem)
         {
             if (currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
             {
