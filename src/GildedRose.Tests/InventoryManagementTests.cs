@@ -57,6 +57,12 @@ namespace GildedRose.Tests
             Assert.Equal(conjuredItem.Quality, 6);
         }
 
+        private void AssertInventoryItemStateAfterUpdate(InventoryItemAssertData inventoryItemComparisonData)
+        {
+            Assert.Equal(inventoryItemComparisonData.ExpectedSellIn, inventoryItemComparisonData.ActualSellIn);
+            Assert.Equal(inventoryItemComparisonData.ExpectedQuality, inventoryItemComparisonData.ActualQuality);
+        }
+
         [Fact]
         public void LegendaryItemNoChangeAfterUpdatingQuality()
         {
@@ -71,8 +77,15 @@ namespace GildedRose.Tests
             int newSellIn = legendaryItemSulfuras.SellIn;
             int newQuality = legendaryItemSulfuras.Quality;
 
-            Assert.Equal(currentSellIn, newSellIn);
-            Assert.Equal(currentQuality, newQuality);
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = currentSellIn,
+                ActualSellIn = newSellIn,
+                ExpectedQuality = currentQuality,
+                ActualQuality = newQuality
+            };
+
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -83,11 +96,15 @@ namespace GildedRose.Tests
 
             _inventoryManagement.UpdateQuality();
 
-            int expectedSellInAfterOneRunOfUpdateQuality = 4;
-            int expectedQualityAfterOneRunOfUpdateQuality = 6;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = 4,
+                ActualSellIn = standardItemMongooseElixir.SellIn,
+                ExpectedQuality = 6,
+                ActualQuality = standardItemMongooseElixir.Quality
+            };
 
-            Assert.Equal(expectedSellInAfterOneRunOfUpdateQuality, standardItemMongooseElixir.SellIn);
-            Assert.Equal(expectedQualityAfterOneRunOfUpdateQuality, standardItemMongooseElixir.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -99,13 +116,15 @@ namespace GildedRose.Tests
             int timesToRun = 16;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = -6;
-            // Reflects bugfix to original Kata - Zero and not -2
-            int expectedQuality = 0;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = -6,
+                ActualSellIn = dexterityVest.SellIn,
+                ExpectedQuality = 0,
+                ActualQuality = dexterityVest.Quality
+            };
 
-            Assert.Equal(expectedSellIn, dexterityVest.SellIn);
-            Assert.Equal(expectedQuality, dexterityVest.Quality);
-
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -117,12 +136,15 @@ namespace GildedRose.Tests
             int timesToRun = 8;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = -3;
-            int expectedQuality = 0;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = -3,
+                ActualSellIn = mongooseElixir.SellIn,
+                ExpectedQuality = 0,
+                ActualQuality = mongooseElixir.Quality
+            };
 
-            Assert.Equal(expectedSellIn, mongooseElixir.SellIn);
-            // Reflects bugfix to original Kata - Zero and not -1
-            Assert.Equal(expectedQuality, mongooseElixir.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -135,11 +157,15 @@ namespace GildedRose.Tests
             int timesToRun = 13;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = -3;
-            int expectedQuality = 4;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = -3,
+                ActualSellIn = dexterityVest.SellIn,
+                ExpectedQuality = 4,
+                ActualQuality = dexterityVest.Quality
+            };
 
-            Assert.Equal(expectedSellIn, dexterityVest.SellIn);
-            Assert.Equal(expectedQuality, dexterityVest.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -151,14 +177,15 @@ namespace GildedRose.Tests
             int timesToRun = 5;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = -3;
-            // The hypothetical product owner has updated the requirements to reflect that Aged Brie increases in quality by 2
-            // after the sell by date has passed.
-            int expectedQuality = 8;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = -3,
+                ActualSellIn = agedBrie.SellIn,
+                ExpectedQuality = 8,
+                ActualQuality = agedBrie.Quality
+            };
 
-            Assert.Equal(expectedSellIn, agedBrie.SellIn);
-            Assert.Equal(expectedQuality, agedBrie.Quality);
-
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         /// <summary>
@@ -187,11 +214,15 @@ namespace GildedRose.Tests
             int timesToRun = 14;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = 1;
-            int expectedQuality = 49;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = 1,
+                ActualSellIn = backstagePasses.SellIn,
+                ExpectedQuality = 49,
+                ActualQuality = backstagePasses.Quality
+            };
 
-            Assert.Equal(expectedSellIn, backstagePasses.SellIn);
-            Assert.Equal(expectedQuality, backstagePasses.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -203,11 +234,15 @@ namespace GildedRose.Tests
             int timesToRun = 15;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = 0;
-            int expectedQuality = 50;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = 0,
+                ActualSellIn = backstagePasses.SellIn,
+                ExpectedQuality = 50,
+                ActualQuality = backstagePasses.Quality
+            };
 
-            Assert.Equal(expectedSellIn, backstagePasses.SellIn);
-            Assert.Equal(expectedQuality, backstagePasses.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -219,11 +254,15 @@ namespace GildedRose.Tests
             int timesToRun = 16;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = -1;
-            int expectedQuality = 0;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = -1,
+                ActualSellIn = backstagePasses.SellIn,
+                ExpectedQuality = 0,
+                ActualQuality = backstagePasses.Quality
+            };
 
-            Assert.Equal(expectedSellIn, backstagePasses.SellIn);
-            Assert.Equal(expectedQuality, backstagePasses.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -235,11 +274,15 @@ namespace GildedRose.Tests
             int timesToRun = 3;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = 0;
-            int expectedQuality = 0;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = 0,
+                ActualSellIn = conjuredItem.SellIn,
+                ExpectedQuality = 0,
+                ActualQuality = conjuredItem.Quality
+            };
 
-            Assert.Equal(expectedSellIn, conjuredItem.SellIn);
-            Assert.Equal(expectedQuality, conjuredItem.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
 
         [Fact]
@@ -251,12 +294,24 @@ namespace GildedRose.Tests
             int timesToRun = 4;
             RunUpdateQuality(timesToRun, _inventoryManagement);
 
-            int expectedSellIn = -1;
-            int expectedQuality = 0;
+            InventoryItemAssertData comparisonData = new InventoryItemAssertData()
+            {
+                ExpectedSellIn = -1,
+                ActualSellIn = conjuredItem.SellIn,
+                ExpectedQuality = 0,
+                ActualQuality = conjuredItem.Quality
+            };
 
-            Assert.Equal(expectedSellIn, conjuredItem.SellIn);
-            Assert.Equal(expectedQuality, conjuredItem.Quality);
+            AssertInventoryItemStateAfterUpdate(comparisonData);
         }
+    }
+
+    internal class InventoryItemAssertData
+    {
+        public int ExpectedSellIn { get; set; }
+        public int ExpectedQuality { get; set; }
+        public int ActualSellIn { get; set; }
+        public int ActualQuality { get; set; }
     }
 }
  
