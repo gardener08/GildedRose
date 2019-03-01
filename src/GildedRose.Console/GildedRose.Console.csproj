@@ -41,10 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConjuredItem.cs" />
+    <Compile Include="DailyCloseItemFactory.cs" />
+    <Compile Include="DecreasingQualityItem.cs" />
+    <Compile Include="IDailyCloseItem.cs" />
+    <Compile Include="IncreasingQualityItem.cs" />
+    <Compile Include="IncreasingQualityWithExpirationItem.cs" />
     <Compile Include="InventoryData.cs" />
     <Compile Include="InventoryManagement.cs" />
     <Compile Include="InventoryItem.cs" />
     <Compile Include="InventoryUpdater.cs" />
+    <Compile Include="LegendaryQualityItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

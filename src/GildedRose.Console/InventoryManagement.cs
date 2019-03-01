@@ -26,13 +26,12 @@ namespace GildedRose.Console
         {
             for (int i = 0; i < _inventoryItems.Count; i++)
             {
-                // Base level decrement of sell by date.
-                if (_inventoryItems[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    _inventoryItems[i].SellIn = _inventoryItems[i].SellIn - 1;
-                }
-
                 InventoryItem currentItem = _inventoryItems[i];
+                IDailyCloseItem dailyCloseItem =
+                    DailyCloseItemFactory.CreateAppropriateDailyCloseItem(currentItem);
+
+                dailyCloseItem.RollSellByDate();
+
                 if (currentItem.Name != "Aged Brie" && currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
                     DecrementDecreasingQualityItem(currentItem);
