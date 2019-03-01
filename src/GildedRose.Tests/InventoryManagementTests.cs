@@ -6,27 +6,30 @@ namespace GildedRose.Tests
 {
     public class InventoryManagementTests
     {
-        private void RunUpdateQuality(int timesToRun, InventoryManagement inventoryManagementInstance)
+        private InventoryManagement _inventoryManagement = null;
+        public InventoryManagementTests()
+        {
+            _inventoryManagement = new InventoryManagement();
+        }
+        private void RunUpdateQuality(int timesToRun, InventoryManagement _inventoryManagement)
         {
             for (int i = 0; i < timesToRun; i++)
             {
-                inventoryManagementInstance.UpdateQuality();
+                _inventoryManagement.UpdateQuality();
             }
         }
 
         [Fact]
         public void DoesSetupOfItemsWorkCorrectly()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             Assert.NotNull(programItems);
         }
 
         [Fact]
         public void ProgrammerDidNotChangeItemCollection()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem dexterityVest = programItems[0];
             InventoryItem agedBrie = programItems[1];
             InventoryItem standardItemMongooseElixir = programItems[2];
@@ -57,14 +60,13 @@ namespace GildedRose.Tests
         [Fact]
         public void LegendaryItemNoChangeAfterUpdatingQuality()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem legendaryItemSulfuras = programItems[3];
 
             int currentSellIn = legendaryItemSulfuras.SellIn;
             int currentQuality = legendaryItemSulfuras.Quality;
 
-            inventoryManagementInstance.UpdateQuality();
+            _inventoryManagement.UpdateQuality();
 
             int newSellIn = legendaryItemSulfuras.SellIn;
             int newQuality = legendaryItemSulfuras.Quality;
@@ -76,11 +78,10 @@ namespace GildedRose.Tests
         [Fact]
         public void DecrementQualityOfStandardItem()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem standardItemMongooseElixir = programItems[2];
 
-            inventoryManagementInstance.UpdateQuality();
+            _inventoryManagement.UpdateQuality();
 
             int expectedSellInAfterOneRunOfUpdateQuality = 4;
             int expectedQualityAfterOneRunOfUpdateQuality = 6;
@@ -92,12 +93,11 @@ namespace GildedRose.Tests
         [Fact]
         public void NoNegativeQualityValuesWhereQualityDecreasesOnDexterityVest()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem dexterityVest = programItems[0];
 
             int timesToRun = 16;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = -6;
             // Reflects bugfix to original Kata - Zero and not -2
@@ -111,12 +111,11 @@ namespace GildedRose.Tests
         [Fact]
         public void NoNegativeQualityValuesWhereQualityDecreasesOnMongooseElixir()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem mongooseElixir = programItems[2];
 
             int timesToRun = 8;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = -3;
             int expectedQuality = 0;
@@ -129,13 +128,12 @@ namespace GildedRose.Tests
         [Fact]
         public void DoubleSpeedQualityDegradationAfterSellByDate()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem dexterityVest = programItems[0];
             
             // Sell By date reached on tenth run.
             int timesToRun = 13;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = -3;
             int expectedQuality = 4;
@@ -147,12 +145,11 @@ namespace GildedRose.Tests
         [Fact]
         public void IncreasingQualityOfAgedBrie()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem agedBrie = programItems[1];
 
             int timesToRun = 5;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = -3;
             // The hypothetical product owner has updated the requirements to reflect that Aged Brie increases in quality by 2
@@ -170,12 +167,11 @@ namespace GildedRose.Tests
         [Fact]
         public void MaxQualityOfAgedBrie()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem agedBrie = programItems[1];
 
             int timesToRun = 65;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedQuality = 50;
 
@@ -185,12 +181,11 @@ namespace GildedRose.Tests
         [Fact]
         public void BackstagePassesOneDayBeforeConcert()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem backstagePasses = programItems[4];
 
             int timesToRun = 14;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = 1;
             int expectedQuality = 49;
@@ -202,12 +197,11 @@ namespace GildedRose.Tests
         [Fact]
         public void BackstagePassesOnConcertDate()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem backstagePasses = programItems[4];
 
             int timesToRun = 15;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = 0;
             int expectedQuality = 50;
@@ -219,12 +213,11 @@ namespace GildedRose.Tests
         [Fact]
         public void BackstagePassesAfterConcertDate()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem backstagePasses = programItems[4];
 
             int timesToRun = 16;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = -1;
             int expectedQuality = 0;
@@ -236,12 +229,11 @@ namespace GildedRose.Tests
         [Fact]
         public void DecrementQualityOfConjuredItems()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem conjuredItem = programItems[5];
 
             int timesToRun = 3;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = 0;
             int expectedQuality = 0;
@@ -253,12 +245,11 @@ namespace GildedRose.Tests
         [Fact]
         public void DecrementQualityOfConjuredItemsPastSellByDate()
         {
-            InventoryManagement inventoryManagementInstance = new InventoryManagement();
-            IList<InventoryItem> programItems = inventoryManagementInstance.getInventoryItems();
+            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
             InventoryItem conjuredItem = programItems[5];
 
             int timesToRun = 4;
-            RunUpdateQuality(timesToRun, inventoryManagementInstance);
+            RunUpdateQuality(timesToRun, _inventoryManagement);
 
             int expectedSellIn = -1;
             int expectedQuality = 0;
