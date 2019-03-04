@@ -5,9 +5,6 @@ namespace GildedRose.Console
 {
     public class InventoryUpdater
     {
-
-        private readonly string[] _increasingValueNames = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert"};
-
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
