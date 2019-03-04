@@ -20,6 +20,16 @@ namespace GildedRose.Console
                 return;
             }
 
+            VariableRateUpdateItemQualityBasedOnExpiration();
+
+            if (_dailyCloseItem.Quality > 50)
+            {
+                _dailyCloseItem.Quality = 50;
+            }
+        }
+
+        private void VariableRateUpdateItemQualityBasedOnExpiration()
+        {
             if (_dailyCloseItem.SellIn < 6)
             {
                 _dailyCloseItem.Quality = _dailyCloseItem.Quality + 3;
@@ -31,11 +41,6 @@ namespace GildedRose.Console
             else
             {
                 _dailyCloseItem.Quality = _dailyCloseItem.Quality + 1;
-            }
-
-            if (_dailyCloseItem.Quality > 50)
-            {
-                _dailyCloseItem.Quality = 50;
             }
         }
     }
