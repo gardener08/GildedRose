@@ -15,17 +15,19 @@ namespace GildedRose.Console
         }
         public void UpdateItemQuality()
         {
-            _dailyCloseItem.Quality = _dailyCloseItem.Quality - 1;
-            if (_dailyCloseItem.SellIn < 0)
+            if (_dailyCloseItem.SellIn >= 0 && _dailyCloseItem.Quality >= 1)
             {
-                if (_dailyCloseItem.Quality > 0)
-                {
-                    _dailyCloseItem.Quality = _dailyCloseItem.Quality - 1;
-                }
-                else
-                {
-                    _dailyCloseItem.Quality = _dailyCloseItem.Quality - _dailyCloseItem.Quality;
-                }
+                _dailyCloseItem.Quality = _dailyCloseItem.Quality - 1;
+                return;
+            }
+
+            if (_dailyCloseItem.Quality >= 2)
+            {
+                _dailyCloseItem.Quality = _dailyCloseItem.Quality - 2;
+            }
+            else if (_dailyCloseItem.Quality >= 1)
+            {
+                _dailyCloseItem.Quality = _dailyCloseItem.Quality - 1;
             }
         }
     }
