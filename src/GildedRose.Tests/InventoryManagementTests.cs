@@ -26,37 +26,6 @@ namespace GildedRose.Tests
             Assert.NotNull(programItems);
         }
 
-        [Fact]
-        public void ProgrammerDidNotChangeItemCollection()
-        {
-            IList<InventoryItem> programItems = _inventoryManagement.getInventoryItems();
-            InventoryItem dexterityVest = programItems[0];
-            InventoryItem agedBrie = programItems[1];
-            InventoryItem standardItemMongooseElixir = programItems[2];
-            InventoryItem legendaryItemSulfuras = programItems[3];
-            InventoryItem backstagePasses = programItems[4];
-            InventoryItem conjuredItem = programItems[5];
-
-            Assert.Equal(dexterityVest.SellIn, 10);
-            Assert.Equal(dexterityVest.Quality, 20);
-
-            Assert.Equal(agedBrie.SellIn, 2);
-            Assert.Equal(agedBrie.Quality, 0);
-
-            Assert.Equal(standardItemMongooseElixir.SellIn, 5);
-            Assert.Equal(standardItemMongooseElixir.Quality, 7);
-
-            Assert.Equal(legendaryItemSulfuras.SellIn, 0);
-            Assert.Equal(legendaryItemSulfuras.Quality, 80);
-            Assert.Contains("Sulfuras", legendaryItemSulfuras.Name);
-
-            Assert.Equal(backstagePasses.SellIn, 15);
-            Assert.Equal(backstagePasses.Quality, 20);
-
-            Assert.Equal(conjuredItem.SellIn, 3);
-            Assert.Equal(conjuredItem.Quality, 6);
-        }
-
         private void AssertInventoryItemStateAfterUpdate(InventoryItemAssertData inventoryItemComparisonData)
         {
             Assert.Equal(inventoryItemComparisonData.ExpectedSellIn, inventoryItemComparisonData.ActualSellIn);
