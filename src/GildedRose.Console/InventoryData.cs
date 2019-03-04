@@ -27,20 +27,5 @@ namespace GildedRose.Console
         {
             return _inventoryItems;
         }
-
-        private readonly IDictionary<string, string> _inventoryItemCategoryMapping = new Dictionary<string, string>()
-        {
-            {"+5 Dexterity Vest", "StandardInventoryItem"},
-            {"Aged Brie", "StandardInventoryItem"},
-            {"Elixir of the Mongoose", "StandardInventoryItem"},
-            {"Sulfuras, Hand of Ragnaros", "StandardInventoryItem"},
-            {"Backstage passes to a TAFKAL80ETC concert", "StandardInventoryItem"},
-            {"Conjured Mana Cake", "StandardInventoryItem"}
-        };
-
-        public IDictionary<string, string> GetInventoryItemCategoryMapping()
-        {
-            return _inventoryItemCategoryMapping;
-        }
     }
 }
