@@ -2,18 +2,16 @@
 
 namespace GildedRose.Console
 {
-    public class LegendaryQualityItem : IDailyCloseItem
+    public class LegendaryQualityItem : DailyCloseItem
     {
-        private InventoryItem _dailyCloseItem = null;
-        public LegendaryQualityItem(InventoryItem itemToUpdate)
+        public LegendaryQualityItem(InventoryItem itemToUpdate) : base(itemToUpdate)
         {
-            _dailyCloseItem = itemToUpdate;
         }
-        public void RollSellByDate()
+        public override void RollSellByDate()
         {
             // Nothing happens here because a legendary item never goes bad.
         }
-        public void UpdateItemQuality()
+        public override void UpdateItemQuality()
         {
             // Nothing happens here because a legendary item never goes bad.
         }

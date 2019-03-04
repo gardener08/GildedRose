@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConjuredItem.cs" />
+    <Compile Include="DailyCloseItem.cs" />
     <Compile Include="DailyCloseItemFactory.cs" />
     <Compile Include="DecreasingQualityItem.cs" />
     <Compile Include="IDailyCloseItem.cs" />

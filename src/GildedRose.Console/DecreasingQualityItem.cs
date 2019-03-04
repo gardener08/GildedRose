@@ -2,18 +2,12 @@
 
 namespace GildedRose.Console
 {
-    public class DecreasingQualityItem : IDailyCloseItem
+    public class DecreasingQualityItem : DailyCloseItem
     {
-        private InventoryItem _dailyCloseItem = null;
-        public DecreasingQualityItem(InventoryItem itemToUpdate)
+        public DecreasingQualityItem(InventoryItem itemToUpdate) : base(itemToUpdate)
         {
-            _dailyCloseItem = itemToUpdate;
         }
-        public void RollSellByDate()
-        {
-            _dailyCloseItem.SellIn = _dailyCloseItem.SellIn - 1;
-        }
-        public void UpdateItemQuality()
+        public override void UpdateItemQuality()
         {
             if (_dailyCloseItem.SellIn >= 0 && _dailyCloseItem.Quality >= 1)
             {
